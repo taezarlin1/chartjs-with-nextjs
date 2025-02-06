@@ -1,11 +1,11 @@
 "use client"
 import { useRef, useEffect } from "react";
-import { Chart, BarController, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend, PieController, ArcElement } from "chart.js";
+import { Chart, BarController, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend } from "chart.js";
 
 // ✅ Register all required components
-Chart.register(BarController, BarElement, PieController, ArcElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
+Chart.register(BarController, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
 
-export default function BarChart(){
+export default function PieChart(){
     const chartRef = useRef(null)
 
     useEffect(()=>{
@@ -17,7 +17,7 @@ export default function BarChart(){
             const context = chartRef.current.getContext("2d");
 
             const newChart = new Chart(context, {
-                type: "bar",
+                type: "pie",
                 data: {
                     labels: ["John", "Jane", "Doe", "Emily", "Jack", "David", "Ruby"],
                     datasets: [
@@ -49,22 +49,7 @@ export default function BarChart(){
                 },
                 options: {
                     responsive: true,
-                    plugins: {
-                        legend: {display: true},
-                        title: {display: true, text: "Bar Chart Example"}
-                    },
-                    scales: {
-                        x: {
-                            type: "category",
-                            grid: {
-                                display: false
-                            }
-                        },
-                        y: {
-                            beginAtZero: true
-                        },
-                        
-                    }
+                    
                 }
             });
 
