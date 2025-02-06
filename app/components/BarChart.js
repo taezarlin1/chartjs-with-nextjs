@@ -1,5 +1,5 @@
 "use client"
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Chart, BarController, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend, PieController, ArcElement } from "chart.js";
 
 // ✅ Register all required components
@@ -7,6 +7,22 @@ Chart.register(BarController, BarElement, PieController, ArcElement, CategorySca
 
 export default function BarChart(){
     const chartRef = useRef(null)
+    const [chartData, setChartData] = useState([])
+
+    useEffect(()=>{
+        const fetchData = async ()=>{
+            const response = await fetch("https://dummyjson.com/users")
+            if (!response.ok){
+                console.error("Bad response")
+            }
+            const data = await response.json()
+            // console.log(data);
+            const firstTen = data.users.splice(0,10)
+            // setChartData(data.users)
+            setChartData(firstTen)
+        }
+        fetchData()
+    }, [])
 
     useEffect(()=>{
         if (chartRef.current){
@@ -15,19 +31,32 @@ export default function BarChart(){
             }
 
             const context = chartRef.current.getContext("2d");
+            const label = chartData.map((items)=> items.firstName)
+            const data = chartData.map((items)=> items.weight)
 
             const newChart = new Chart(context, {
                 type: "bar",
                 data: {
-                    labels: ["John", "Jane", "Doe", "Emily", "Jack", "David", "Ruby"],
+                    // labels: ["John", "Jane", "Doe", "Emily", "Jack", "David", "Ruby"],
+                    labels: label,
                     datasets: [
                         {
                             label: "Info",
-                            data: [34, 54, 12, 64, 26, 44, 18],
+                            // data: [34, 54, 12, 64, 26, 44, 18],
+                            data: data,
+                            // data: [
+                            //     {name: "John", age: "34"},
+                            //     {name: "Jane", age: "54"},
+                            //     {name: "Doe", age: "12"},
+                            //     {name: "Emily", age: "64"},
+                            //     {name: "Jack", age: "26"},
+                            //     {name: "David", age: "44"},
+                            //     {name: "Ruby", age: "18"},
+                            // ],
                             backgroundColor: [
                                 "rgb(255, 99, 132, 0.2)",
                                 "rgb(255, 159, 64, 0.2)",
-                                "rgb(255, 205, 86, 0.2)",
+                                "rgb(155, 205, 86, 0.2)",
                                 "rgb(75, 192, 192, 0.2)",
                                 "rgb(54, 162, 235, 0.2)",
                                 "rgb(153, 102, 255, 0.2)",
@@ -36,7 +65,7 @@ export default function BarChart(){
                             borderColor: [
                                 "rgb(255, 99, 132)",
                                 "rgb(255, 159, 64)",
-                                "rgb(255, 205, 86)",
+                                "rgb(155, 205, 86)",
                                 "rgb(75, 192, 192)",
                                 "rgb(54, 162, 235)",
                                 "rgb(153, 102, 255)",
@@ -48,10 +77,17 @@ export default function BarChart(){
                     ]
                 },
                 options: {
+                    // layout: {
+                    //     padding: 40
+                    // },
                     responsive: true,
+                    // parsing: {
+                    //     xAxisKey: "name",
+                    //     yAxisKey: "age"
+                    // },
                     plugins: {
                         legend: {display: true},
-                        title: {display: true, text: "Bar Chart Example"}
+                        title: {display: true, text: "Weight Info"}
                     },
                     scales: {
                         x: {
@@ -70,6 +106,6 @@ export default function BarChart(){
 
             chartRef.current.chart = newChart
         }
-    }, [])
+    }, [chartData])
     return <div style={{position: "relative", width: "90vw", height: "80vh"}}><canvas ref={chartRef}/></div>
 }
