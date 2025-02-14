@@ -21,7 +21,7 @@ export default function Home() {
         <h3>Doughnut Chart</h3>
         <DonutChart/>
       </div>
-      <div>
+      {/* <div>
         <h3>Polar Area Chart</h3>
         <PolarAreaChart/>
       </div>
@@ -36,7 +36,7 @@ export default function Home() {
       <div>
         <h3>Scatter Chart</h3>
         <ScatterChart/>
-      </div>
+      </div> */}
     </div>
   );
 }

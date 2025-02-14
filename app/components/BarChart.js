@@ -37,13 +37,13 @@ export default function BarChart(){
             const newChart = new Chart(context, {
                 type: "bar",
                 data: {
-                    // labels: ["John", "Jane", "Doe", "Emily", "Jack", "David", "Ruby"],
-                    labels: label,
+                    labels: ["ကချင်", "ကယား", "ကရင်", "ချင်း", "စစ်ကိုင်း", "တနင်္သာရီ", "ပဲခူး", "မကွေး", "မန္တလေး", "မွန်", "ရခိုင်", "ရန်ကုန်", "ရှမ်း", "ဧရာဝတီ", "နေပြည်တော်"],
+                    // labels: label,
                     datasets: [
                         {
                             label: "Info",
-                            // data: [34, 54, 12, 64, 26, 44, 18],
-                            data: data,
+                            data: [2197283, 296903, 1490968, 373024, 6015590, 1380567, 4453691, 4078504, 6283663, 1717166, 2466385, 7370010, 6517377, 5546281, 1129344],
+                            // data: data,
                             // data: [
                             //     {name: "John", age: "34"},
                             //     {name: "Jane", age: "54"},
